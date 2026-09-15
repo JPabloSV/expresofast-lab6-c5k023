@@ -163,6 +163,8 @@ async function abrirBitacora(envioId, codigo) {
     }
 }
 
+// Reto autónomo: filtra las entradas de la bitácora entre una fecha
+// inicial y una final seleccionadas en el modal de auditoría.
 function filtrarBitacoraPorFecha() {
     const desde = document.getElementById('fecha-desde').value;
     const hasta = document.getElementById('fecha-hasta').value;

@@ -12,6 +12,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Filtro que intercepta cada petición HTTP para extraer el token del
+ * encabezado Authorization: Bearer, validarlo y cargar el contexto
+ * de seguridad en SecurityContextHolder.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

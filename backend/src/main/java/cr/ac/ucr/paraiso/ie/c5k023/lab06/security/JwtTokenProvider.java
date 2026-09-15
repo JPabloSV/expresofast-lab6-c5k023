@@ -14,6 +14,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Genera, firma y valida los tokens JWT del sistema utilizando
+ * la clave secreta configurada en application.properties (app.jwt.secret).
+ */
 @Component
 public class JwtTokenProvider {
 

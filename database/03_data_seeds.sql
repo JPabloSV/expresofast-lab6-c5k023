@@ -59,3 +59,5 @@ VALUES
     ('EXP-1002', 'Cartago, Paraiso centro',     35.00, 15200.00, 'EN_TRANSITO',  2, 2, GETDATE(), GETDATE()),
     ('EXP-1003', 'Alajuela, La Fortuna',        60.00, 21000.00, 'ENTREGADO',    1, 1, GETDATE(), GETDATE());
 GO
+
+-- Datos de prueba verificados para los 3 roles del sistema (admin, operador1, conductor1)

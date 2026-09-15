@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manejador global de excepciones: estandariza las respuestas HTTP de
+ * error (400, 401, 403, 404, 500) sin exponer detalles del servidor.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

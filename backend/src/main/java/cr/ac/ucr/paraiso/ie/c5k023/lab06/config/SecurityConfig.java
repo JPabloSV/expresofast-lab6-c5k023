@@ -44,25 +44,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(sess -> sess
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/envios/optimizados")
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sess -> sess
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Se permite OPTIONS sin autenticación para que el navegador pueda
+                // completar el pre-vuelo CORS antes de peticiones POST/PATCH/DELETE.
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/envios/optimizados")
                         .hasAnyRole("ADMIN", "OPERADOR", "CONDUCTOR")
-                    .requestMatchers(HttpMethod.POST, "/api/envios")
+                        .requestMatchers(HttpMethod.POST, "/api/envios")
                         .hasAnyRole("ADMIN", "OPERADOR")
-                    .requestMatchers(HttpMethod.PATCH, "/api/envios/*/estado")
+                        .requestMatchers(HttpMethod.PATCH, "/api/envios/*/estado")
                         .hasAnyRole("ADMIN", "CONDUCTOR")
-                    .requestMatchers(HttpMethod.GET, "/api/envios/*/bitacora")
+                        .requestMatchers(HttpMethod.GET, "/api/envios/*/bitacora")
                         .hasAnyRole("ADMIN", "OPERADOR")
-                    .requestMatchers("/api/vehiculos/**").hasRole("ADMIN")
-                    .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                        .requestMatchers("/api/vehiculos/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

@@ -1,0 +1,14 @@
+spring.application.name=lab06
+
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=ExpresoFastC5K023_II2026;encrypt=true;trustServerCertificate=true
+spring.datasource.username=sa
+spring.datasource.password=123123
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+app.jwt.secret=aPKvdhKDLOgyrqM2N8gTkfQzPn99eFjpx5u7WlArHYm0KmT95NzJiXmYo+PAazry
+app.jwt.expiration-ms=3600000

@@ -1,0 +1,286 @@
+:root {
+    --color-primario: #1e293b;
+    --color-fondo: #f1f5f9;
+    --color-tarjeta: #ffffff;
+    --color-borde: #e2e8f0;
+    --color-entregado: #16a34a;
+    --color-transito: #2563eb;
+    --color-pendiente: #d97706;
+    --color-cancelado: #dc2626;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-primario);
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-primario);
+    color: white;
+    padding: 1rem 2rem;
+}
+
+.topbar nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#btn-logout {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+}
+
+.layout {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.panel-filtros {
+    flex: 0 0 280px;
+}
+
+.tablero {
+    flex: 1;
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filtro-btn {
+    border: 1px solid var(--color-borde);
+    background: var(--color-tarjeta);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.filtro-btn.activo {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+.form-section {
+    background: var(--color-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.form-section h2 {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+#form-envio label {
+    display: block;
+    font-size: 0.85rem;
+    margin-top: 0.6rem;
+}
+
+#form-envio input {
+    width: 100%;
+    padding: 0.4rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    margin-top: 0.2rem;
+}
+
+#form-envio button {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.6rem;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.envios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.envio-card {
+    background: var(--color-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.envio-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.pill-status {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.pill-status.ENTREGADO { background-color: var(--color-entregado); }
+.pill-status.EN_TRANSITO { background-color: var(--color-transito); }
+.pill-status.PENDIENTE { background-color: var(--color-pendiente); }
+.pill-status.CANCELADO { background-color: var(--color-cancelado); }
+
+.envio-card .acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.envio-card button {
+    flex: 1;
+    padding: 0.4rem;
+    border: 1px solid var(--color-borde);
+    background: var(--color-fondo);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-form {
+    background: var(--color-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+}
+
+.login-form h1 {
+    margin-bottom: 1.5rem;
+    color: var(--color-primario);
+}
+
+.login-form label {
+    display: block;
+    text-align: left;
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    margin-top: 0.25rem;
+}
+
+.login-form button {
+    margin-top: 1.25rem;
+    width: 100%;
+    padding: 0.6rem;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#login-mensaje {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--color-tarjeta);
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 480px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.modal-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.filtros-fecha {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.filtros-fecha input {
+    padding: 0.3rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+}
+
+.bitacora-item {
+    border-bottom: 1px solid var(--color-borde);
+    padding: 0.5rem 0;
+}
+
+.bitacora-item p {
+    font-size: 0.85rem;
+    margin: 0.15rem 0;
+}
+#btn-logout {
+    background-color: var(--color-cancelado);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+}

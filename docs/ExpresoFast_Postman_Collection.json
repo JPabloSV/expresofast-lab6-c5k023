@@ -1,0 +1,94 @@
+{
+  "info": {
+    "name": "ExpresoFast - Lab06 - C5K023",
+    "description": "Colección de endpoints de la API ExpresoFast (Laboratorio 6 - Seguridad JWT y RBAC).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8080" },
+    { "key": "jwt_token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api", "auth", "login"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Envios",
+      "item": [
+        {
+          "name": "Listar envios (tablero optimizado)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": { "raw": "{{base_url}}/api/envios/optimizados", "host": ["{{base_url}}"], "path": ["api", "envios", "optimizados"] }
+          }
+        },
+        {
+          "name": "Crear envio",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigoRastreo\": \"EXP-2001\",\n  \"direccionDestino\": \"Heredia, San Francisco\",\n  \"pesoKg\": 15.5,\n  \"costo\": 9000.0,\n  \"vehiculoId\": 1,\n  \"conductorId\": 1\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/envios", "host": ["{{base_url}}"], "path": ["api", "envios"] }
+          }
+        },
+        {
+          "name": "Cambiar estado de envio",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nuevoEstado\": \"EN_TRANSITO\",\n  \"observaciones\": \"Salida de bodega central\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/envios/1/estado", "host": ["{{base_url}}"], "path": ["api", "envios", "1", "estado"] }
+          }
+        },
+        {
+          "name": "Consultar bitacora de un envio",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": { "raw": "{{base_url}}/api/envios/1/bitacora", "host": ["{{base_url}}"], "path": ["api", "envios", "1", "bitacora"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vehiculos",
+      "item": [
+        {
+          "name": "Listar vehiculos",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": { "raw": "{{base_url}}/api/vehiculos", "host": ["{{base_url}}"], "path": ["api", "vehiculos"] }
+          }
+        }
+      ]
+    }
+  ]
+}

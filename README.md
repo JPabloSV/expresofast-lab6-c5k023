@@ -122,3 +122,7 @@ manualmente con el token devuelto por `/api/auth/login`.
   no puede volver a `PENDIENTE` o `EN_TRANSITO`. El intento devuelve `400 Bad Request`.
 - **Filtro de fechas en la bitácora:** el modal de historial de un envío permite filtrar las
   entradas por un rango de fechas (desde/hasta).
+
+## Autor
+
+Juan Pablo Solano Vásquez — Carné C5K023

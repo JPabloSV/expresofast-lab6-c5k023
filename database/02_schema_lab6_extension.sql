@@ -1,10 +1,3 @@
--- =====================================================================
--- ExpresoFast - Carne C5K023 - II-2026
--- 02_schema_lab6_extension.sql
--- Extension de seguridad (Usuario, Rol, UsuarioRol) y auditoria (BitacoraEnvio)
--- Ejecutar DESPUES de 01_schema_lab5.sql
--- =====================================================================
-
 USE ExpresoFastC5K023_II2026;
 GO
 

@@ -1,9 +1,3 @@
--- =====================================================================
--- ExpresoFast - Carne C5K023 - II-2026
--- 01_schema_lab5.sql
--- Esquema base del dominio logistico (Laboratorio 5)
--- =====================================================================
-
 IF DB_ID('ExpresoFastC5K023_II2026') IS NULL
 BEGIN
     CREATE DATABASE ExpresoFastC5K023_II2026;

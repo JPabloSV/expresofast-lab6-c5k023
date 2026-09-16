@@ -1,11 +1,3 @@
--- =====================================================================
--- ExpresoFast - Carne C5K023 - II-2026
--- 03_data_seeds.sql
--- Datos de prueba: empresa, vehiculos, conductores, roles y usuarios
--- Ejecutar DESPUES de 01_schema_lab5.sql y 02_schema_lab6_extension.sql
--- Contrasena en texto plano para TODOS los usuarios de prueba: Password123!
--- =====================================================================
-
 USE ExpresoFastC5K023_II2026;
 GO
 

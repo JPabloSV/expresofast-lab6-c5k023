@@ -25,6 +25,11 @@ public class EnvioController {
         return envioService.obtenerEnviosOptimizados();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<EnvioResponseDTO> obtenerPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(envioService.obtenerPorId(id));
+    }
+
     @PostMapping
     public ResponseEntity<EnvioResponseDTO> registrar(@Valid @RequestBody EnvioRequestDTO request) {
         EnvioResponseDTO creado = envioService.registrarEnvio(request);
@@ -33,8 +38,15 @@ public class EnvioController {
 
     @PatchMapping("/{id}/estado")
     public ResponseEntity<EnvioResponseDTO> actualizarEstado(@PathVariable Integer id,
-                                                              @Valid @RequestBody CambioEstadoDTO cambio) {
+                                                             @Valid @RequestBody CambioEstadoDTO cambio) {
         return ResponseEntity.ok(envioService.actualizarEstado(id, cambio));
+    }
+
+    @PostMapping("/{id}/cancelar")
+    public ResponseEntity<EnvioResponseDTO> cancelar(@PathVariable Integer id,
+                                                     @RequestBody(required = false) CambioEstadoDTO cambio) {
+        String observaciones = (cambio != null) ? cambio.getObservaciones() : null;
+        return ResponseEntity.ok(envioService.cancelarEnvio(id, observaciones));
     }
 
     @GetMapping("/{id}/bitacora")

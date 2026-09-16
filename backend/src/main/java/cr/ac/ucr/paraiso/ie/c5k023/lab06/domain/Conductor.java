@@ -27,6 +27,9 @@ public class Conductor {
     @Column(nullable = false, length = 20)
     private String telefono;
 
+    @Column(nullable = false)
+    private Boolean activo = Boolean.TRUE;
+
     @JsonIgnore
     @OneToMany(mappedBy = "conductor")
     private List<Envio> envios = new ArrayList<>();
@@ -71,6 +74,14 @@ public class Conductor {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public List<Envio> getEnvios() {

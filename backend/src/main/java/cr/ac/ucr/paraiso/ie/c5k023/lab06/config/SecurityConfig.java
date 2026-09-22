@@ -48,8 +48,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Se permite OPTIONS sin autenticación para que el navegador pueda
-                // completar el pre-vuelo CORS antes de peticiones POST/PATCH/DELETE.
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
@@ -58,7 +56,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/envios")
                         .hasAnyRole("ADMIN", "OPERADOR")
                         .requestMatchers(HttpMethod.PATCH, "/api/envios/*/estado")
-                        .hasAnyRole("ADMIN", "CONDUCTOR")
+                        .hasAnyRole("ADMIN", "OPERADOR", "CONDUCTOR")
                         .requestMatchers(HttpMethod.GET, "/api/envios/*/bitacora")
                         .hasAnyRole("ADMIN", "OPERADOR")
                         .requestMatchers(HttpMethod.POST, "/api/envios/*/cancelar")
@@ -74,7 +72,10 @@ public class SecurityConfig {
 
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:5500",
+                "http://127.0.0.1:5500"
+        ));
         config.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
 

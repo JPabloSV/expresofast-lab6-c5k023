@@ -3,80 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExpresoFast — Panel de Control</title>
+    <title>ExpresoFast — Iniciar Sesión</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header class="topbar">
-        <h1>ExpresoFast</h1>
-        <nav>
-            <span id="contador-envios">0 envíos</span>
-            <span id="usuario-actual"></span>
-            <button id="btn-logout">Cerrar Sesión</button>
-        </nav>
-    </header>
+<body class="pagina-login">
+    <main class="login-wrapper">
+        <form id="loginForm" class="login-card" novalidate>
+            <h1 class="login-titulo">ExpresoFast</h1>
+            <p class="login-subtitulo">Consola de Operación Logística</p>
 
-    <main class="layout">
-        <aside class="panel-filtros">
-            <h2>Filtrar por estado</h2>
-            <div class="filtros">
-                <button class="filtro-btn activo" data-estado="TODOS">TODOS</button>
-                <button class="filtro-btn" data-estado="PENDIENTE">PENDIENTE</button>
-                <button class="filtro-btn" data-estado="EN_TRANSITO">EN_TRANSITO</button>
-                <button class="filtro-btn" data-estado="ENTREGADO">ENTREGADO</button>
+            <div class="campo">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" autocomplete="username" required>
             </div>
 
-            <section class="form-section" id="form-section">
-                <h2>Registrar Envío</h2>
-                <form id="form-envio">
-                    <label for="codigoRastreo">Código de Rastreo</label>
-                    <input type="text" id="codigoRastreo" required>
-
-                    <label for="direccionDestino">Dirección Destino</label>
-                    <input type="text" id="direccionDestino" required>
-
-                    <label for="pesoKg">Peso (kg)</label>
-                    <input type="number" id="pesoKg" step="0.01" min="0" required>
-
-                    <label for="costo">Costo</label>
-                    <input type="number" id="costo" step="0.01" min="0" required>
-
-                    <label for="vehiculoId">ID Vehículo</label>
-                    <input type="number" id="vehiculoId" required>
-
-                    <label for="conductorId">ID Conductor</label>
-                    <input type="number" id="conductorId" required>
-
-                    <button type="submit">Registrar Envío</button>
-                </form>
-                <p id="form-mensaje"></p>
-            </section>
-        </aside>
-
-        <section class="tablero" aria-label="Tablero de envíos">
-            <div class="envios-grid" id="envios-grid">
-
+            <div class="campo">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
             </div>
-        </section>
+
+            <button type="submit" class="boton-primario">Ingresar</button>
+
+            <p id="loginError" class="mensaje-error" role="alert" aria-live="polite"></p>
+        </form>
     </main>
 
-    <div id="modal-bitacora" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-titulo">Bitácora</h2>
-                <button id="modal-cerrar">✕</button>
-            </div>
-            <div class="filtros-fecha">
-                <label for="fecha-desde">Desde</label>
-                <input type="date" id="fecha-desde">
-                <label for="fecha-hasta">Hasta</label>
-                <input type="date" id="fecha-hasta">
-            </div>
-            <div id="bitacora-lista"></div>
-        </div>
-    </div>
-
-    <script src="auth.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

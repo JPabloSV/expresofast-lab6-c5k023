@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpresoFast — Consola de Operación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="pagina-dashboard">
+    <header class="topbar">
+        <div class="marca">
+            <span class="logo" aria-hidden="true"></span>
+            <span class="nombre-app">ExpresoFast</span>
+        </div>
+        <div class="sesion-usuario">
+            <span id="nombreUsuario"></span>
+            <button id="btnLogout" class="boton-secundario">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <nav class="filtros-nav" aria-label="Filtrar envíos por estado">
+        <button class="filtro-btn activo" data-estado="TODOS">Todos</button>
+        <button class="filtro-btn" data-estado="PENDIENTE">Pendientes</button>
+        <button class="filtro-btn" data-estado="EN_TRANSITO">En Tránsito</button>
+        <button class="filtro-btn" data-estado="ENTREGADO">Entregados</button>
+    </nav>
+
+    <main class="contenido">
+        <section id="kpiSection" class="kpi-section" aria-label="Indicadores clave">
+            <article class="kpi-card">
+                <p class="kpi-valor" id="kpiTotal">0</p>
+                <p class="kpi-etiqueta">Total Envíos</p>
+            </article>
+            <article class="kpi-card">
+                <p class="kpi-valor" id="kpiVehiculos">0</p>
+                <p class="kpi-etiqueta">Vehículos Activos</p>
+            </article>
+            <article class="kpi-card">
+                <p class="kpi-valor" id="kpiEntregados">0</p>
+                <p class="kpi-etiqueta">Paquetes Entregados</p>
+            </article>
+        </section>
+
+        <section id="enviosGrid" class="envios-grid" aria-label="Tablero de envíos">
+        </section>
+
+        <p id="mensajeGeneral" class="mensaje-error" role="alert" aria-live="polite"></p>
+    </main>
+
+    <aside id="bitacoraAside" class="bitacora-aside" hidden>
+        <h2>Bitácora de Auditoría</h2>
+        <div class="campo">
+            <label for="fechaDesde">Desde</label>
+            <input type="date" id="fechaDesde">
+        </div>
+        <div class="campo">
+            <label for="fechaHasta">Hasta</label>
+            <input type="date" id="fechaHasta">
+        </div>
+        <p class="bitacora-ayuda">Seleccione un envío en el tablero para ver su historial aquí.</p>
+        <div id="bitacoraLista"></div>
+    </aside>
+
+    <footer class="pie-institucional">
+        <p>&copy; 2026 ExpresoFast — Universidad de Costa Rica, Sede del Atlántico.</p>
+        <p><a href="mailto:soporte@expresofast.cr">Soporte técnico</a></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

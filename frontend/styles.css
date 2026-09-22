@@ -1,12 +1,19 @@
 :root {
-    --color-primario: #1e293b;
-    --color-fondo: #f1f5f9;
-    --color-tarjeta: #ffffff;
-    --color-borde: #e2e8f0;
-    --color-entregado: #16a34a;
-    --color-transito: #2563eb;
-    --color-pendiente: #d97706;
-    --color-cancelado: #dc2626;
+    --primary-color: #0284c7;
+    --primary-dark: #0369a1;
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --bg-page: #f1f5f9;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-dark: #1e293b;
+    --accent-success: #22c55e;
+    --accent-warning: #eab308;
+    --accent-danger: #dc2626;
+    --border-color: #e2e8f0;
+    --radius: 10px;
+    --shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    --font-family: 'Inter', system-ui, sans-serif;
 }
 
 * {
@@ -16,104 +23,185 @@
 }
 
 body {
-    font-family: system-ui, sans-serif;
-    background-color: var(--color-fondo);
-    color: var(--color-primario);
+    font-family: var(--font-family);
+    background-color: var(--bg-page);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+a {
+    color: var(--primary-color);
+}
+
+.pagina-login {
+    background-color: var(--bg-dark);
+}
+
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.login-card {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    padding: 2.5rem 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-titulo {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+}
+
+.login-subtitulo {
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.campo label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.campo input {
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-size: 1rem;
+}
+
+.campo input:focus {
+    outline: 2px solid var(--primary-color);
+}
+
+.boton-primario {
+    background-color: var(--primary-color);
+    color: var(--text-main);
+    border: none;
+    padding: 0.7rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.boton-primario:hover {
+    background-color: var(--primary-dark);
+}
+
+.boton-secundario {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--text-muted);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.mensaje-error {
+    color: var(--accent-danger);
+    font-size: 0.9rem;
+    min-height: 1.2rem;
 }
 
 .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--color-primario);
-    color: white;
-    padding: 1rem 2rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    padding: 1rem 1.5rem;
 }
 
-.topbar nav {
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.sesion-usuario {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-#btn-logout {
-    background: transparent;
-    color: white;
-    border: 1px solid white;
-    border-radius: 4px;
-    padding: 0.3rem 0.7rem;
-    cursor: pointer;
-}
-
-.layout {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem;
-}
-
-.panel-filtros {
-    flex: 0 0 280px;
-}
-
-.tablero {
-    flex: 1;
-}
-
-.filtros {
+.filtros-nav {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .filtro-btn {
-    border: 1px solid var(--color-borde);
-    background: var(--color-tarjeta);
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 
 .filtro-btn.activo {
-    background-color: var(--color-primario);
-    color: white;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-main);
 }
 
-.form-section {
-    background: var(--color-tarjeta);
-    border: 1px solid var(--color-borde);
-    border-radius: 8px;
-    padding: 1rem;
+.contenido {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.form-section h2 {
-    margin-bottom: 0.75rem;
-    font-size: 1rem;
+.kpi-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-#form-envio label {
-    display: block;
+.kpi-card {
+    flex: 1 1 200px;
+    background-color: #ffffff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.kpi-valor {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.kpi-etiqueta {
+    color: var(--text-muted);
     font-size: 0.85rem;
-    margin-top: 0.6rem;
-}
-
-#form-envio input {
-    width: 100%;
-    padding: 0.4rem;
-    border: 1px solid var(--color-borde);
-    border-radius: 4px;
-    margin-top: 0.2rem;
-}
-
-#form-envio button {
-    margin-top: 1rem;
-    width: 100%;
-    padding: 0.6rem;
-    background-color: var(--color-primario);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    margin-top: 0.25rem;
 }
 
 .envios-grid {
@@ -123,164 +211,94 @@ body {
 }
 
 .envio-card {
-    background: var(--color-tarjeta);
-    border: 1px solid var(--color-borde);
-    border-radius: 8px;
+    background-color: #ffffff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
-
-.envio-card h3 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-.pill-status {
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
-.pill-status.ENTREGADO { background-color: var(--color-entregado); }
-.pill-status.EN_TRANSITO { background-color: var(--color-transito); }
-.pill-status.PENDIENTE { background-color: var(--color-pendiente); }
-.pill-status.CANCELADO { background-color: var(--color-cancelado); }
 
 .envio-card .acciones {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
 }
 
 .envio-card button {
     flex: 1;
-    padding: 0.4rem;
-    border: 1px solid var(--color-borde);
-    background: var(--color-fondo);
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.75rem;
-}
-
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.login-form {
-    background: var(--color-tarjeta);
-    border: 1px solid var(--color-borde);
-    border-radius: 8px;
-    padding: 2rem;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-}
-
-.login-form h1 {
-    margin-bottom: 1.5rem;
-    color: var(--color-primario);
-}
-
-.login-form label {
-    display: block;
-    text-align: left;
-    font-size: 0.85rem;
-    margin-top: 0.75rem;
-}
-
-.login-form input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid var(--color-borde);
-    border-radius: 4px;
-    margin-top: 0.25rem;
-}
-
-.login-form button {
-    margin-top: 1.25rem;
-    width: 100%;
-    padding: 0.6rem;
-    background-color: var(--color-primario);
-    color: white;
-    border: none;
+    padding: 0.4rem 0.6rem;
     border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-page);
     cursor: pointer;
-}
-
-#login-mensaje {
-    margin-top: 0.75rem;
     font-size: 0.85rem;
 }
 
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
+.pill-status {
+    align-self: flex-start;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffffff;
 }
 
-.modal-content {
-    background: var(--color-tarjeta);
-    border-radius: 8px;
+.pill-status.PENDIENTE { background-color: var(--accent-warning); }
+.pill-status.EN_TRANSITO { background-color: var(--primary-color); }
+.pill-status.ENTREGADO { background-color: var(--accent-success); }
+.pill-status.CANCELADO { background-color: var(--accent-danger); }
+
+.bitacora-aside {
+    background-color: #ffffff;
+    border-top: 1px solid var(--border-color);
     padding: 1.5rem;
-    width: 90%;
-    max-width: 480px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.modal-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.modal-header button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.filtros-fecha {
-    display: flex;
+    flex-direction: column;
     gap: 0.75rem;
-    align-items: center;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
 }
 
-.filtros-fecha input {
-    padding: 0.3rem;
-    border: 1px solid var(--color-borde);
-    border-radius: 4px;
+.bitacora-ayuda {
+    color: var(--text-muted);
+    font-size: 0.85rem;
 }
 
 .bitacora-item {
-    border-bottom: 1px solid var(--color-borde);
-    padding: 0.5rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
 }
 
-.bitacora-item p {
+.pie-institucional {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-muted);
     font-size: 0.85rem;
-    margin: 0.15rem 0;
+    border-top: 1px solid var(--border-color);
 }
-#btn-logout {
-    background-color: var(--color-cancelado);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.3rem 0.7rem;
-    cursor: pointer;
+
+@media (max-width: 768px) {
+    .filtros-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtro-btn {
+        text-align: center;
+    }
+
+    .kpi-section {
+        flex-direction: column;
+    }
+
+    .bitacora-aside {
+        padding: 1rem;
+    }
+
+    .login-card {
+        padding: 2rem 1.25rem;
+    }
 }

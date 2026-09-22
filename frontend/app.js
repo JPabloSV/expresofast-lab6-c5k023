@@ -135,9 +135,7 @@ function inicializarDashboard() {
 
 function aplicarPermisosPorRol() {
     const asideBitacora = document.getElementById('bitacoraAside');
-    if (tieneRol('ROLE_ADMIN')) {
-        asideBitacora.hidden = false;
-    }
+    asideBitacora.hidden = !tieneRol('ROLE_ADMIN');
 }
 
 async function cargarEnvios() {

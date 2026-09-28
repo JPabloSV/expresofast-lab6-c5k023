@@ -302,3 +302,6 @@ a {
         padding: 2rem 1.25rem;
     }
 }
+#bitacoraAside[hidden] {
+    display: none !important;
+}

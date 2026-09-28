@@ -9,6 +9,10 @@ import cr.ac.ucr.paraiso.ie.c5k023.lab06.exception.ResourceNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,10 +43,10 @@ public class EnvioService {
     private final BitacoraEnvioRepository bitacoraEnvioRepository;
 
     public EnvioService(EnvioRepository envioRepository,
-                        VehiculoRepository vehiculoRepository,
-                        ConductorRepository conductorRepository,
-                        UsuarioRepository usuarioRepository,
-                        BitacoraEnvioRepository bitacoraEnvioRepository) {
+            VehiculoRepository vehiculoRepository,
+            ConductorRepository conductorRepository,
+            UsuarioRepository usuarioRepository,
+            BitacoraEnvioRepository bitacoraEnvioRepository) {
         this.envioRepository = envioRepository;
         this.vehiculoRepository = vehiculoRepository;
         this.conductorRepository = conductorRepository;
@@ -186,7 +190,7 @@ public class EnvioService {
 
     /** Registra en la bitacora el cambio de estado junto al usuario autenticado. */
     private void registrarBitacora(Envio envio, String estadoAnterior,
-                                   String estadoNuevo, String observaciones) {
+            String estadoNuevo, String observaciones) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
@@ -207,5 +211,30 @@ public class EnvioService {
                 envio.getPesoKg(), envio.getCosto(), envio.getEstadoEnvio(),
                 envio.getVehiculo().getPlaca(),
                 envio.getConductor().getNombre() + " " + envio.getConductor().getApellidos());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<EnvioDTO> listarPaginado(int page, int size, String sortBy, String dir,
+            String busqueda, String estado) {
+        String campoOrden = (sortBy != null && !sortBy.isBlank()) ? sortBy : "fechaCreacion";
+        Sort.Direction direccion = "asc".equalsIgnoreCase(dir) ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direccion, campoOrden));
+        return envioRepository.buscarPaginado(busqueda, estado, pageable)
+                .map(this::aEnvioDTO);
+    }
+
+    @Transactional(readOnly = true)
+    public List<EnvioDTO> listarViaStoredProcedure(String estado) {
+        return envioRepository.obtenerEnviosPorEstadoSP(estado).stream()
+                .map(this::aEnvioDTO)
+                .toList();
+    }
+
+    private EnvioDTO aEnvioDTO(Envio envio) {
+        return new EnvioDTO(
+                envio.getId(), envio.getCodigoRastreo(), envio.getDestinatario(),
+                envio.getDireccionDestino(), envio.getCosto(), envio.getEstadoEnvio(),
+                envio.getFechaCreacion());
     }
 }

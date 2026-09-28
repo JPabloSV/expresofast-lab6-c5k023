@@ -5,7 +5,7 @@ GO
 UPDATE Envio SET destinatario = 'Jorge Castro Mena'    WHERE codigo_rastreo = 'EXP-1001';
 UPDATE Envio SET destinatario = 'Silvia Vargas Leiton' WHERE codigo_rastreo = 'EXP-1002';
 UPDATE Envio SET destinatario = 'Andres Solis Umana'   WHERE codigo_rastreo = 'EXP-1003';
-UPDATE Envio SET destinatario = 'Carlos Mora Vargas'   WHERE codigo_rastreo = 'EXP-0001';
+UPDATE Envio SET destinatario = 'Mariana Solis Vega'   WHERE codigo_rastreo = 'EXP-0001';
 GO
 
 -- Envios adicionales para completar el minimo de 15 registros con los 4 estados

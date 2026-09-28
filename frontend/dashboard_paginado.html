@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpresoFast — Envíos Paginados</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="pagina-dashboard">
+    <header class="topbar">
+        <div class="marca">
+            <span class="logo" aria-hidden="true"></span>
+            <span class="nombre-app">ExpresoFast</span>
+        </div>
+        <div class="sesion-usuario">
+            <span id="nombreUsuario"></span>
+            <button id="btnLogout" class="boton-secundario">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <nav class="filtros-nav" aria-label="Navegación">
+        <a class="enlace-nav" href="dashboard.html">&larr; Volver al tablero</a>
+    </nav>
+
+    <main class="contenido">
+        <h1 class="titulo-pagina">Guías de envío</h1>
+
+        <form id="filtrosForm" class="filtros-barra" role="search" aria-label="Filtros de envíos">
+            <div class="campo">
+                <label for="busqueda">Buscar (rastreo o destinatario)</label>
+                <input type="search" id="busqueda" name="busqueda" placeholder="Ej. EXP-1004 o Maria">
+            </div>
+            <div class="campo">
+                <label for="consulta">Consulta</label>
+                <select id="consulta" name="consulta">
+                    <option value="">Todos los envíos (paginado)</option>
+                    <option value="PENDIENTE">Stored Procedure: Pendientes</option>
+                    <option value="EN_TRANSITO">Stored Procedure: En tránsito</option>
+                    <option value="ENTREGADO">Stored Procedure: Entregados</option>
+                    <option value="CANCELADO">Stored Procedure: Cancelados</option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="tamanio">Envíos por página</label>
+                <select id="tamanio" name="tamanio">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <button type="submit" id="btnBuscar" class="boton-primario">Buscar</button>
+        </form>
+
+        <p id="modoConsulta" class="modo-sp" hidden></p>
+
+        <div class="tabla-contenedor">
+            <table class="tabla-envios">
+                <caption class="visually-hidden">Guías de envío</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Rastreo</th>
+                        <th scope="col">Destinatario</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Flete</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="enviosBody"></tbody>
+            </table>
+        </div>
+
+        <nav class="paginador" aria-label="Paginación de envíos">
+            <button type="button" id="btnPrimera">&lt;&lt; Primera</button>
+            <button type="button" id="btnAnterior">&lt; Anterior</button>
+            <span id="paginaInfo" class="paginador-estado" aria-live="polite">Página 0 de 0 (Total: 0 envíos)</span>
+            <button type="button" id="btnSiguiente">Siguiente &gt;</button>
+            <button type="button" id="btnUltima">Última &gt;&gt;</button>
+        </nav>
+
+        <p id="mensajeGeneral" class="mensaje-error" role="alert" aria-live="polite"></p>
+    </main>
+
+    <footer class="pie-institucional">
+        <p>&copy; 2026 ExpresoFast — Universidad de Costa Rica, Sede del Atlántico.</p>
+        <p><a href="mailto:soporte@expresofast.cr">Soporte técnico</a></p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="paginado.js"></script>
+</body>
+</html>

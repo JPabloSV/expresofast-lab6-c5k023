@@ -305,3 +305,158 @@ a {
 #bitacoraAside[hidden] {
     display: none !important;
 }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.titulo-pagina {
+    font-size: 1.4rem;
+}
+
+.enlace-nav {
+    border: 1px solid var(--primary-color);
+    color: var(--primary-dark);
+    text-decoration: none;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.enlace-nav:hover {
+    background-color: var(--primary-color);
+    color: var(--text-main);
+}
+
+.filtros-barra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+    background-color: #ffffff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1rem 1.25rem;
+}
+
+.filtros-barra .campo {
+    flex: 1 1 200px;
+}
+
+.filtros-barra .campo input,
+.filtros-barra .campo select {
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+.filtros-barra .campo input:disabled,
+.filtros-barra .campo select:disabled,
+.filtros-barra .boton-primario:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.filtros-barra .boton-primario {
+    padding: 0.6rem 1.25rem;
+}
+
+.modo-sp {
+    color: var(--primary-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.tabla-contenedor {
+    background-color: #ffffff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+}
+
+.tabla-envios {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+}
+
+.tabla-envios th,
+.tabla-envios td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.tabla-envios thead th {
+    background-color: var(--bg-page);
+    font-weight: 600;
+}
+
+.tabla-envios td.num {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.tabla-envios tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.tabla-vacia {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 1.5rem;
+}
+
+.paginador {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.paginador button {
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.paginador button:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-main);
+}
+
+.paginador button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.paginador-estado {
+    padding: 0 0.75rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .enlace-nav {
+        text-align: center;
+    }
+
+    .paginador-estado {
+        flex-basis: 100%;
+        order: -1;
+        text-align: center;
+    }
+}

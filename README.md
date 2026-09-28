@@ -1,4 +1,4 @@
-# ExpresoFast — Laboratorios 6 y 7 (Seguridad JWT/RBAC + Suite de Pruebas)
+# ExpresoFast — Laboratorios 6 al 9 (Seguridad JWT/RBAC, Pruebas y Paginación)
 
 **Universidad de Costa Rica — Sede del Atlántico, Recinto Paraíso**
 **Carrera de Informática Empresarial**
@@ -9,17 +9,20 @@
 **Estudiante:** Juan Pablo Solano Vásquez
 **Carné:** C5K023
 
-> **Laboratorio 7** (suite de pruebas unitarias e integración con JUnit 5, Mockito, MockMvc y
-> JaCoCo) se desarrolla en la rama `lab07`. Ver la sección *Pruebas Automatizadas* al final.
+> **Laboratorio 7** (suite de pruebas con JUnit 5, Mockito, MockMvc y JaCoCo) se documenta en la
+> sección *Laboratorio 7* de este archivo.
+> **Laboratorio 9** (paginación en servidor, Stored Procedures y dashboard paginado) se desarrolla
+> en la rama `lab09`. Ver la sección *Laboratorio 9* más abajo.
 
 ---
 
 ## Descripción
 
-Plataforma full-stack de logística y monitoreo de envíos express. Esta segunda parte extiende
-el proyecto del Laboratorio 5 agregando autenticación con JWT, control de acceso por roles
-(RBAC), DTOs con validación estricta, manejo centralizado de excepciones y una bitácora de
-auditoría de cambios de estado.
+Plataforma full-stack de logística y monitoreo de envíos express. Extiende el proyecto del
+Laboratorio 5 con autenticación JWT, control de acceso por roles (RBAC), DTOs con validación
+estricta, manejo centralizado de excepciones, bitácora de auditoría de cambios de estado, una
+suite de pruebas automatizadas (Lab 7) y, en el Laboratorio 9, paginación en el servidor,
+consultas mediante Stored Procedures y un dashboard paginado.
 
 ## Requisitos de Entorno
 
@@ -43,13 +46,16 @@ expresofast-lab6-c5k023/
 │   ├── 01_schema_lab5.sql
 │   ├── 02_schema_lab6_extension.sql
 │   ├── 03_data_seeds.sql
-│   └── 04_schema_lab7_extension.sql
+│   ├── 04_schema_lab7_extension.sql
+│   ├── 05_schema_lab9_extension.sql
+│   └── 06_data_lab9_seeds.sql
 ├── frontend/                         # HTML5 + CSS3 + JS vanilla
-│   ├── login.html
-│   ├── index.html
+│   ├── index.html                    # Inicio de sesión
+│   ├── dashboard.html                # Tablero de envíos (Lab 6)
+│   ├── dashboard_paginado.html       # Tabla paginada (Lab 9)
 │   ├── styles.css
-│   ├── auth.js
-│   └── app.js
+│   ├── app.js                        # Sesión, JWT y tablero
+│   └── paginado.js                   # Paginación y consultas por SP (Lab 9)
 ├── docs/
 │   └── ExpresoFast_Postman_Collection.json
 └── README.md
@@ -58,11 +64,13 @@ expresofast-lab6-c5k023/
 ## Guía de Configuración de Base de Datos
 
 1. Abrí SSMS y conectate a tu instancia local de SQL Server.
-2. Ejecutá los 3 scripts de la carpeta `database/`, **en orden**:
+2. Ejecutá los 6 scripts de la carpeta `database/`, **en orden**:
    - `01_schema_lab5.sql` — crea la base de datos `ExpresoFastC5K023_II2026` y las tablas del dominio logístico (`EmpresaLogistica`, `Vehiculo`, `Conductor`, `Envio`).
    - `02_schema_lab6_extension.sql` — agrega las tablas de seguridad y auditoría (`Usuario`, `Rol`, `UsuarioRol`, `BitacoraEnvio`).
    - `03_data_seeds.sql` — inserta datos de prueba: 1 empresa, 3 vehículos, 2 conductores, los 3 roles del sistema y 3 usuarios de prueba con contraseñas ya encriptadas en BCrypt.
    - `04_schema_lab7_extension.sql` — **(Laboratorio 7)** agrega la columna `activo` a `Conductor` y `conductor_asignado_id` a `Vehiculo`, necesarias para las reglas de negocio de asignación de conductores.
+   - `05_schema_lab9_extension.sql` — **(Laboratorio 9)** agrega la columna `destinatario` a `Envio` y crea los Stored Procedures `SP_OBTENER_ENVIOS_POR_ESTADO` (parámetro `@pEstado`) y `SP_RESUMEN_METRICAS_ENVIOS`. Es idempotente.
+   - `06_data_lab9_seeds.sql` — **(Laboratorio 9)** completa el `destinatario` de los envíos existentes e inserta envíos adicionales hasta superar los 15 registros, con los 4 estados representados, para poder probar la paginación.
 
 ## Configuración del Backend
 
@@ -88,9 +96,12 @@ Todos con la misma contraseña: **`Password123!`**
 |---|---|---|
 | `/api/auth/login` | POST | Público |
 | `/api/envios/optimizados` | GET | ADMIN, OPERADOR, CONDUCTOR |
+| `/api/envios/{id}` | GET | ADMIN, OPERADOR, CONDUCTOR |
 | `/api/envios` | POST | ADMIN, OPERADOR |
-| `/api/envios/{id}/estado` | PATCH | ADMIN, CONDUCTOR |
+| `/api/envios/{id}/estado` | PATCH | ADMIN, OPERADOR, CONDUCTOR |
+| `/api/envios/{id}/cancelar` | POST | ADMIN, OPERADOR |
 | `/api/envios/{id}/bitacora` | GET | ADMIN, OPERADOR |
+| `/api/v1/envios/**` | GET | ADMIN, OPERADOR, CONDUCTOR |
 | `/api/vehiculos/**` | Todos | ADMIN |
 
 ## Instrucciones de Ejecución
@@ -106,14 +117,18 @@ La API queda disponible en `http://localhost:8080`.
 
 ### Frontend
 
-El frontend es HTML/CSS/JS estático, sin build. Abrí `frontend/login.html` con una extensión
+El frontend es HTML/CSS/JS estático, sin build. Abrí `frontend/index.html` con una extensión
 tipo **Live Server** (VS Code) o cualquier servidor estático local — no lo abras con doble clic
 directo desde el explorador de archivos, porque las peticiones `fetch` requieren que se sirva
 por HTTP, no por `file://`.
 
 1. Iniciá el backend primero.
-2. Abrí `frontend/login.html`.
-3. Iniciá sesión con cualquiera de los usuarios de prueba de la tabla anterior.
+2. Abrí `frontend/index.html` (pantalla de inicio de sesión).
+3. Iniciá sesión con cualquiera de los usuarios de prueba de la tabla anterior. Al ingresar se abre `dashboard.html`.
+4. Desde el tablero, el enlace **Vista paginada** lleva a `dashboard_paginado.html` (Laboratorio 9).
+
+El frontend consume la API en `http://localhost:8080/api` (constante `API_BASE` en `app.js`) y
+guarda el token JWT en `sessionStorage`.
 
 ### Colección de Postman
 
@@ -128,6 +143,56 @@ manualmente con el token devuelto por `/api/auth/login`.
 - **Filtro de fechas en la bitácora:** el modal de historial de un envío permite filtrar las
   entradas por un rango de fechas (desde/hasta).
 
+---
+
+# Laboratorio 9 — Paginación, Stored Procedures y Dashboard Paginado
+
+## Endpoints (`/api/v1/envios`)
+
+Requieren el header `Authorization: Bearer <token>` (roles ADMIN, OPERADOR o CONDUCTOR).
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/api/v1/envios` | Lista paginada de envíos (`Page<EnvioDTO>`). |
+| GET | `/api/v1/envios/procedimiento/{estado}` | Envíos por estado, consultados con el Stored Procedure `SP_OBTENER_ENVIOS_POR_ESTADO`. `estado`: `PENDIENTE`, `EN_TRANSITO`, `ENTREGADO` o `CANCELADO`. |
+
+Parámetros de `GET /api/v1/envios`:
+
+| Parámetro | Por defecto | Descripción |
+|---|---|---|
+| `page` | `0` | Número de página, **base 0**. |
+| `size` | `5` | Registros por página. |
+| `sortBy` | `fechaCreacion` | Campo de ordenamiento. |
+| `direction` | `desc` | `asc` o `desc`. |
+| `busqueda` | — | Texto libre de búsqueda. |
+| `estado` | — | Filtra por estado. |
+
+Ejemplo:
+
+```bash
+curl -H "Authorization: Bearer <token>" \
+  "http://localhost:8080/api/v1/envios?page=2&size=5"
+```
+
+Spring Data pagina desde 0, por lo que la interfaz muestra "Página 3" cuando envía `page=2`.
+
+## Dashboard paginado
+
+`frontend/dashboard_paginado.html` con su script `frontend/paginado.js`:
+
+- Tabla de guías de envío con paginador: primera, anterior, siguiente y última página.
+- Indicador "Página X de Y (Total: N envíos)".
+- Selector de tamaño de página (5, 10 o 20) y campo de búsqueda.
+- Selector de consulta: *Todos los envíos (paginado)* o una consulta por Stored Procedure por cada estado. En este modo la tabla no se pagina y se ve la línea del procedimiento en la terminal del backend.
+
+Requiere haber iniciado sesión en `index.html`: sin token, la página redirige al inicio de sesión.
+
+## Verificación
+
+1. Con el backend y Live Server en ejecución, abrir `dashboard_paginado.html`.
+2. Navegar hasta que la pantalla diga "Página 3" y comprobar en DevTools → Network que la petición lleva `page=2&size=5`.
+3. Elegir una opción *Stored Procedure* y verificar en la terminal del backend la llamada a `SP_OBTENER_ENVIOS_POR_ESTADO`.
+4. Confirmar que la terminal no muestra advertencias `HHH000104`.
 
 ---
 
